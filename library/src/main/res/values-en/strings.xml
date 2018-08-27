@@ -1,8 +1,0 @@
-<resources>
-    <string name="data_exception">Data anomaly</string>
-    <string name="connect_exception">Connection error</string>
-    <string name="service_exception">Server exception</string>
-    <string name="timeout_exception">connection timed out</string>
-    <string name="parse_exception">Parsing abnormality</string>
-    <string name="unknown_exception">unknown error</string>
-</resources>
