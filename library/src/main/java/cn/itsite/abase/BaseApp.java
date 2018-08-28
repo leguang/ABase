@@ -13,8 +13,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
-import org.litepal.LitePal;
-
 import cn.itsite.abase.common.ascreen.AScreen;
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
@@ -59,7 +57,6 @@ public class BaseApp extends MultiDexApplication {
         initData();//根据是不是Debug版本来设置。
         initStrictMode();
         initRouter();
-        LitePal.initialize(this);//初始化ORM。
     }
 
     private void initData() {

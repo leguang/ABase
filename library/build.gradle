@@ -38,6 +38,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    // todo ----------------以下为自己维护的库-------------------
+
+    //一个扩展性很好的Dialog+DialogFragment工具。
+    api 'com.github.leguang:ADialog:2.0.4'
+
+    // todo ----------------以上为自己维护的库-------------------
+
     //谷歌官方依赖
     api 'com.android.support:appcompat-v7:28.0.0-rc01'
     api 'com.android.support:recyclerview-v7:28.0.0-rc01'
