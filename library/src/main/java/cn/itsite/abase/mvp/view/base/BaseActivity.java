@@ -14,8 +14,6 @@ import cn.itsite.abase.common.ActivityHelper;
 import cn.itsite.abase.common.ascreen.AScreen;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.adialog.dialog.LoadingDialog;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 
@@ -33,6 +31,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AScreen.setDefault(this);//设置屏幕适配
         initActivity();
         initStateBar();
         mPresenter = createPresenter();
@@ -88,11 +87,6 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
         }
         //把每一个Activity弹出栈。
         ActivityHelper.getInstance().removeActivity(this);
-    }
-
-    @Override
-    public FragmentAnimator onCreateFragmentAnimator() {
-        return new DefaultNoAnimator();
     }
 
     /**

@@ -103,7 +103,7 @@ public class AScreen {
      * @param px      the pixel value
      * @return value in dp
      */
-    public static int pxToDp(Context context, float px) {
+    public static int px2dp(Context context, float px) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (int) ((px / displayMetrics.density) + 0.5f);
     }
@@ -115,7 +115,7 @@ public class AScreen {
      * @param dp
      * @return
      */
-    public static int dpToPx(Context context, float dp) {
+    public static int dp2px(Context context, float dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (int) ((dp * displayMetrics.density) + 0.5f);
     }
