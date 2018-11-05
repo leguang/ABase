@@ -12,7 +12,6 @@ import com.gyf.barlibrary.OSUtils;
 
 import cn.itsite.abase.common.ActivityHelper;
 import cn.itsite.abase.common.ascreen.AScreen;
-import cn.itsite.abase.exception.ExceptionHandler;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
@@ -89,11 +88,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
         //把每一个Activity弹出栈。
         ActivityHelper.getInstance().removeActivity(this);
         if (mImmersionBar != null) {
-            try {
-                mImmersionBar.destroy();
-            } catch (Exception e) {
-                ExceptionHandler.handle(e);
-            }
+            mImmersionBar.destroy();
         }
     }
 

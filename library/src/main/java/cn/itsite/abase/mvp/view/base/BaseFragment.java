@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.gyf.barlibrary.ImmersionBar;
 
-import cn.itsite.abase.exception.ExceptionHandler;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -39,6 +38,15 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     }
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (mImmersionBar == null) {
+            mImmersionBar = ImmersionBar.with(this);
+            mImmersionBar.navigationBarWithKitkatEnable(false).init();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (mPresenter != null) {
@@ -46,11 +54,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
             mPresenter = null;
         }
         if (mImmersionBar != null) {
-            try {
-                mImmersionBar.destroy();
-            } catch (Exception e) {
-                ExceptionHandler.handle(e);
-            }
+            mImmersionBar.destroy();
         }
         hideSoftInput();
     }
