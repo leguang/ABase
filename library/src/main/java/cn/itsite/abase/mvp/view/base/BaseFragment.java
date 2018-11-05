@@ -37,14 +37,14 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
         return null;
     }
 
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        if (mImmersionBar == null) {
-            mImmersionBar = ImmersionBar.with(this);
-            mImmersionBar.navigationBarWithKitkatEnable(false).init();
-        }
-    }
+//    @Override
+//    public void onSupportVisible() {
+//        super.onSupportVisible();
+//        if (mImmersionBar == null) {
+//            mImmersionBar = ImmersionBar.with(this);
+//            mImmersionBar.navigationBarWithKitkatEnable(false).init();
+//        }
+//    }
 
     @Override
     public void onDestroyView() {
