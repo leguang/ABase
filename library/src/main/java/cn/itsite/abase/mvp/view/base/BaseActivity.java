@@ -25,8 +25,8 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     public static final String TAG = BaseActivity.class.getSimpleName();
     public static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
     public P mPresenter;
-    private ImmersionBar mImmersionBar;
-    private LoadingDialog loadingDialog;
+    public ImmersionBar mImmersionBar;
+    public LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

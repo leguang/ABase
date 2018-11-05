@@ -23,8 +23,8 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 public abstract class BaseFragment<P extends BaseContract.Presenter> extends SwipeBackFragment implements BaseContract.View {
     private final String TAG = this.getClass().getSimpleName();
     public P mPresenter;
-    private LoadingDialog loadingDialog;
-    private ImmersionBar mImmersionBar;
+    public ImmersionBar mImmersionBar;
+    public LoadingDialog loadingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
