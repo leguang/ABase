@@ -49,14 +49,25 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mPresenter != null) {
-            mPresenter.clear();
-            mPresenter = null;
-        }
         if (mImmersionBar != null) {
             mImmersionBar.destroy();
         }
         hideSoftInput();
+    }
+
+    /**
+     * mPresenter在这里销毁是因为创建是在onCreate里创建的，最好对称。
+     * 如果是在onCreateView里创建的，那就在onDestroyView里销毁。
+     * 因为ViewPager缓存，当返回到曾经缓存的fragment时，presenter会为空，
+     * 因为在onDestroyView里被置空了，但又不走onCreate，所以考虑是否把置空操作移动到onDestroy。
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.clear();
+            mPresenter = null;
+        }
     }
 
     public P getPresenter() {
