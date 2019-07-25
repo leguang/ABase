@@ -45,9 +45,9 @@ dependencies {
     // todo ----------------以上为自己维护的库-------------------
 
     //谷歌官方依赖
-    api 'androidx.appcompat:appcompat:1.1.0-rc01'
+    api 'androidx.appcompat:appcompat:1.0.2'
     api 'androidx.constraintlayout:constraintlayout:1.1.3'
-    api 'com.google.android.material:material:1.1.0-alpha08'
+    api 'com.android.support:design:28.0.0'
     api 'androidx.multidex:multidex:2.0.1'
 
     //RxJava2系列
