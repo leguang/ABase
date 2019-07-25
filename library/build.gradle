@@ -90,8 +90,8 @@ dependencies {
     api 'com.orhanobut:logger:2.2.0'
 
     //阿里巴巴开源基础路由
-    api 'com.alibaba:arouter-api:1.4.0'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.1'
+    api 'com.alibaba:arouter-api:1.5.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 
     //下拉刷新框架
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
