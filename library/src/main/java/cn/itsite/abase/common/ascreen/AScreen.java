@@ -1,12 +1,12 @@
 package cn.itsite.abase.common.ascreen;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
 /**
@@ -55,12 +55,12 @@ public class AScreen {
     }
 
     //此方法在BaseActivity中做初始化(如果不封装BaseActivity的话,直接用下面那个方法就好)
-    public static void setDefault(Activity activity) {
+    public static void setDefault(AppCompatActivity activity) {
         setAppOrientation(activity, WIDTH, width);
     }
 
     //此方法用于在某一个Activity里面更改适配的方向
-    public static void setOrientation(Activity activity, String orientation, float dimension) {
+    public static void setOrientation(AppCompatActivity activity, String orientation, float dimension) {
         setAppOrientation(activity, orientation, dimension);
     }
 
@@ -72,7 +72,7 @@ public class AScreen {
      * <p>
      * orientation:方向值,传入width或height
      */
-    private static void setAppOrientation(@Nullable Activity activity, String orientation, float dimension) {
+    private static void setAppOrientation(@Nullable AppCompatActivity activity, String orientation, float dimension) {
         float targetDensity;
 
         if (orientation.equals(HEIGHT)) {

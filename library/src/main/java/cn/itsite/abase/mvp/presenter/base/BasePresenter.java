@@ -1,8 +1,8 @@
 package cn.itsite.abase.mvp.presenter.base;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;

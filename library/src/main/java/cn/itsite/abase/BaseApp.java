@@ -1,7 +1,8 @@
 package cn.itsite.abase;
 
 import android.content.Context;
-import android.support.multidex.MultiDexApplication;
+
+import androidx.multidex.MultiDexApplication;
 
 import cn.itsite.abase.common.ascreen.AScreen;
 

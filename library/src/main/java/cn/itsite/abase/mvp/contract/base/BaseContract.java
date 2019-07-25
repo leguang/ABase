@@ -1,6 +1,6 @@
 package cn.itsite.abase.mvp.contract.base;
 
-import android.support.annotation.UiThread;
+import androidx.annotation.UiThread;
 
 /**
  * Author：leguang on 2016/10/10 0010 20:44

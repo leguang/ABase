@@ -4,8 +4,8 @@ import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.gyf.barlibrary.OSUtils;

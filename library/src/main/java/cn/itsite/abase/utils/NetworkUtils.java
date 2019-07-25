@@ -1,10 +1,10 @@
 package cn.itsite.abase.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import androidx.appcompat.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -315,7 +315,7 @@ public class NetworkUtils {
     /**
      * 打开网络设置界面
      */
-    public static void openSetting(Activity activity) {
+    public static void openSetting(AppCompatActivity activity) {
         Intent intent = null;
         //判断手机系统的版本  即API大于10 就是3.0或以上版本
         intent = new Intent(android.provider.Settings.ACTION_SETTINGS);

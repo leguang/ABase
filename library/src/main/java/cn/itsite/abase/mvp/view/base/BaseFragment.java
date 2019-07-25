@@ -1,9 +1,9 @@
 package cn.itsite.abase.mvp.view.base;
 
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.gyf.barlibrary.ImmersionBar;

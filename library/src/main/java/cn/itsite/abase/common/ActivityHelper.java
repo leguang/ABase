@@ -1,6 +1,6 @@
 package cn.itsite.abase.common;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Stack;
 
@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 public class ActivityHelper {
     private final String TAG = ActivityHelper.class.getSimpleName();
-    private Stack<Activity> activityStack;
+    private Stack<AppCompatActivity> activityStack;
     private static ActivityHelper instance;
 
     private ActivityHelper() {
@@ -35,9 +35,9 @@ public class ActivityHelper {
      *
      * @author kymjs
      */
-    public Activity getActivity(Class<?> cls) {
+    public AppCompatActivity getActivity(Class<?> cls) {
         if (activityStack != null) {
-            for (Activity activity : activityStack) {
+            for (AppCompatActivity activity : activityStack) {
                 if (activity.getClass().equals(cls)) {
                     return activity;
                 }
@@ -49,7 +49,7 @@ public class ActivityHelper {
     /**
      * 添加Activity到堆栈
      */
-    public void addActivity(Activity activity) {
+    public void addActivity(AppCompatActivity activity) {
         if (activityStack == null) {
             activityStack = new Stack<>();
         }
@@ -59,8 +59,8 @@ public class ActivityHelper {
     /**
      * 获取当前栈顶Activity（堆栈中最后一个压入的）
      */
-    public Activity currentActivity() {
-        Activity activity = activityStack.lastElement();
+    public AppCompatActivity currentActivity() {
+        AppCompatActivity activity = activityStack.lastElement();
         return activity;
     }
 
@@ -74,7 +74,7 @@ public class ActivityHelper {
     /**
      * 结束指定的Activity
      */
-    public void finishActivity(Activity activity) {
+    public void finishActivity(AppCompatActivity activity) {
         if (activityStack != null && activity != null && activityStack.contains(activity)) {
             activityStack.remove(activity);
             activity.finish();
@@ -84,7 +84,7 @@ public class ActivityHelper {
     /**
      * 结束指定的Activity
      */
-    public void removeActivity(Activity activity) {
+    public void removeActivity(AppCompatActivity activity) {
         if (activityStack != null && activity != null && activityStack.contains(activity)) {
             activityStack.remove(activity);
         }
@@ -94,7 +94,7 @@ public class ActivityHelper {
      * 结束指定类名的Activity
      */
     public void finishActivity(Class<?> cls) {
-        for (Activity activity : activityStack) {
+        for (AppCompatActivity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
                 break;
@@ -106,7 +106,7 @@ public class ActivityHelper {
      * 结束所有Activity
      */
     public void finishAllActivity() {
-        for (Activity activity : activityStack) {
+        for (AppCompatActivity activity : activityStack) {
             if (null != activity) {
                 activity.finish();
             }
