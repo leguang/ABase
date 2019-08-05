@@ -101,7 +101,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
      */
     @CallSuper
     @Override
-    public void start(Object response) {
+    public void start(Object... response) {
         showLoading();
     }
 
@@ -114,7 +114,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     }
 
     @Override
-    public void error(Object error) {
+    public void error(Object... error) {
         dismissLoading();
     }
 
@@ -126,7 +126,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
 
     @Override
     @CallSuper
-    public void complete(Object response) {
+    public void complete(Object... response) {
         dismissLoading();
     }
 }

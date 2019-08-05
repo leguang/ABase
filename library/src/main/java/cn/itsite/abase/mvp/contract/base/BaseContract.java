@@ -11,11 +11,11 @@ import androidx.annotation.UiThread;
 public interface BaseContract {
     interface View {
 
-        void start(Object response);
+        void start(Object... response);
 
-        void error(Object error);
+        void error(Object... error);
 
-        void complete(Object response);
+        void complete(Object... response);
     }
 
     interface Presenter {
@@ -23,7 +23,7 @@ public interface BaseContract {
         /**
          * Presenter的生命周期开始。
          */
-        void start(Object request);
+        void start(Object... request);
 
         /**
          * Presenter的生命周期结束，释放资源。
@@ -37,7 +37,7 @@ public interface BaseContract {
         /**
          * Model的生命周期开始。
          */
-        void start(Object request);
+        void start(Object... request);
 
         /**
          * Model的生命周期结束，释放资源。

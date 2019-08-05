@@ -17,7 +17,7 @@ public abstract class BaseModel implements BaseContract.Model {
      * 生命周期开始。
      */
     @Override
-    public void start(Object request) {
+    public void start(Object... request) {
         Logger.e(TAG, "start");
     }
 

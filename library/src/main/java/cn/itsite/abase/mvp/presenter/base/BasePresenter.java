@@ -54,7 +54,7 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
      */
     @Override
     @CallSuper
-    public void start(Object request) {
+    public void start(Object... request) {
         if (isViewAttached()) {
             getView().start("");
         }
