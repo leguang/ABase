@@ -4,6 +4,7 @@ import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 
@@ -13,6 +14,7 @@ import com.gyf.barlibrary.OSUtils;
 import cn.itsite.abase.common.ActivityHelper;
 import cn.itsite.abase.common.ascreen.AScreen;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.adialog.dialog.BaseDialog;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
@@ -26,7 +28,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     public static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
     public P mPresenter;
     public ImmersionBar mImmersionBar;
-    public LoadingDialog loadingDialog;
+    public BaseDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,15 +106,9 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     }
 
     public void showLoading() {
-        showLoading("玩命加载中…");
-    }
-
-    public void showLoading(String message) {
         if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(this);
             loadingDialog.setDimAmount(0);
-        } else {
-            loadingDialog.setText(message);
         }
         loadingDialog.show();
     }

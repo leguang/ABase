@@ -1,14 +1,16 @@
 package cn.itsite.abase.mvp.view.base;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.View;
 
 import com.gyf.barlibrary.ImmersionBar;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.adialog.dialog.BaseDialog;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -21,10 +23,10 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
  * 所有Fragment的基类。将Fragment作为View层对象，专职处理View的试图渲染和事件。
  */
 public abstract class BaseFragment<P extends BaseContract.Presenter> extends SwipeBackFragment implements BaseContract.View {
-    private final String TAG = this.getClass().getSimpleName();
+    public final String TAG = this.getClass().getSimpleName();
     public P mPresenter;
     public ImmersionBar mImmersionBar;
-    public LoadingDialog loadingDialog;
+    public BaseDialog loadingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,15 +101,9 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     }
 
     public void showLoading() {
-        showLoading("玩命加载中…");
-    }
-
-    public void showLoading(String message) {
         if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(_mActivity);
             loadingDialog.setDimAmount(0);
-        } else {
-            loadingDialog.setText(message);
         }
         loadingDialog.show();
     }
