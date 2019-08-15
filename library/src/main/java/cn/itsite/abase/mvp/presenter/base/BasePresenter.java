@@ -9,8 +9,9 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 
-import cn.itsite.abase.common.RxManager;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -24,8 +25,11 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
     private final Class<? extends BaseContract.View> mViewClass;
     public Reference<V> mViewReference;
     public M mModel;
-    //每一套mvp应该拥有一个独立的RxManager
-    public RxManager mRxManager = new RxManager();
+    /**
+     * 每一套mvp应该拥有一个独立的RxManager
+     * 管理Observables 和 Subscribers订阅
+     */
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     /**
      * 创建Presenter的时候就绑定View和创建model。
@@ -113,13 +117,14 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
             mModel.clear();
             mModel = null;
         }
-        if (mRxManager != null) {
-            mRxManager.clear();
-        }
         //释放View层对象，避免内存泄露
         if (mViewReference != null) {
             mViewReference.clear();
             mViewReference = null;
+        }
+
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.clear();
         }
     }
 
@@ -135,5 +140,18 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
         if (isViewAttached()) {
             getView().error(request);
         }
+    }
+
+    /**
+     * 单纯的Observables 和 Subscribers管理
+     *
+     * @param disposable
+     */
+    public void add(Disposable disposable) {
+        /*订阅管理*/
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(disposable);
     }
 }
