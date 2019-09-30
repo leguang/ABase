@@ -1,5 +1,6 @@
 package cn.itsite.abase.mvp.view.base;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,11 +11,14 @@ import androidx.annotation.Nullable;
 import com.gyf.barlibrary.ImmersionBar;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
-import cn.itsite.adialog.dialog.BaseDialog;
 import cn.itsite.adialog.dialog.LoadingDialog;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+import retrofit2.Response;
 
 /**
  * Author：leguang on 2016/10/9 0009 15:49
@@ -26,7 +30,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     public final String TAG = this.getClass().getSimpleName();
     public P mPresenter;
     public ImmersionBar mImmersionBar;
-    public BaseDialog loadingDialog;
+    public Dialog loadingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,8 +106,8 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
 
     public void showLoading() {
         if (loadingDialog == null) {
-            loadingDialog = new LoadingDialog(_mActivity);
-            loadingDialog.setDimAmount(0);
+            loadingDialog = new LoadingDialog(_mActivity)
+                    .setDimAmount(0);
         }
         loadingDialog.show();
     }
@@ -123,5 +127,97 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     @CallSuper
     public void complete(Object... response) {
         dismissLoading();
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        if (mPresenter != null) {
+            mPresenter.start();
+        }
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (mPresenter != null) {
+            mPresenter.visible();
+        }
+    }
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        if (mPresenter != null) {
+            mPresenter.invisible();
+        }
+    }
+
+    public abstract class BaseObserver<T> implements Observer<T> {
+
+        @Override
+        public void onSubscribe(Disposable disposable) {
+            start();
+        }
+
+        @Override
+        public void onNext(T response) {
+            onSuccess(response);
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            error(throwable);
+        }
+
+        @Override
+        public void onComplete() {
+            complete("");
+        }
+
+        public abstract void onSuccess(T response);
+    }
+
+    public abstract class ResponseObserver<T extends Response> implements Observer<T> {
+
+        @Override
+        public void onSubscribe(Disposable disposable) {
+            start();
+        }
+
+        @Override
+        public void onNext(T response) {
+            if (response.isSuccessful()) {
+                onSuccess(response);
+            } else {
+                error(response);
+            }
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            error(throwable);
+        }
+
+        @Override
+        public void onComplete() {
+            complete("");
+        }
+
+        public abstract void onSuccess(T t);
+    }
+
+    public abstract class ResponseConsumer<T extends Response> implements Consumer<T> {
+
+        @Override
+        public void accept(T response) {
+            if (response.isSuccessful()) {
+                onSuccess(response);
+            } else {
+                error(response);
+            }
+        }
+
+        public abstract void onSuccess(T t);
     }
 }

@@ -10,7 +10,7 @@ import java.util.Stack;
  * Email：langmanleguang@qq.com
  */
 public class ActivityHelper {
-    private final String TAG = ActivityHelper.class.getSimpleName();
+    public final String TAG = ActivityHelper.class.getSimpleName();
     private Stack<Activity> activityStack;
     private static ActivityHelper instance;
 

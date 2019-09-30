@@ -25,5 +25,4 @@ public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
     }
 
     public abstract void receive(Context context, Intent intent);
-
 }

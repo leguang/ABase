@@ -1,4 +1,4 @@
-package cn.itsite.abase.mvp.view.base;
+package cn.itsite.abase.common;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

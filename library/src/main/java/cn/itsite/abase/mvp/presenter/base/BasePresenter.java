@@ -10,8 +10,11 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import retrofit2.Response;
 
 
 /**
@@ -60,8 +63,28 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
     @CallSuper
     public void start(Object... request) {
         if (isViewAttached()) {
-            getView().start("");
+            getView().start();
         }
+    }
+
+    /**
+     * 主要用于实现一些view可见时恢复订阅等一些场景。
+     *
+     * @param request
+     */
+    @Override
+    public void visible(Object... request) {
+
+    }
+
+    /**
+     * 主要用于view不可见时暂停某些数据处理等场景。
+     *
+     * @param request
+     */
+    @Override
+    public void invisible(Object... request) {
+
     }
 
     @UiThread
@@ -131,7 +154,7 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
     @CallSuper
     public void complete() {
         if (isViewAttached()) {
-            getView().complete("");
+            getView().complete();
         }
     }
 
@@ -147,11 +170,84 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
      *
      * @param disposable
      */
-    public void add(Disposable disposable) {
-        /*订阅管理*/
+    public void addDisposable(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
         mCompositeDisposable.add(disposable);
+    }
+
+    public abstract class BaseObserver<T> implements Observer<T> {
+
+        @Override
+        public void onSubscribe(Disposable disposable) {
+            addDisposable(disposable);
+            if (isViewAttached()) {
+                getView().start();
+            }
+        }
+
+        @Override
+        public void onNext(T response) {
+            onSuccess(response);
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            error(throwable);
+        }
+
+        @Override
+        public void onComplete() {
+            complete();
+        }
+
+        public abstract void onSuccess(T response);
+    }
+
+    public abstract class ResponseObserver<T extends Response> implements Observer<T> {
+
+        @Override
+        public void onSubscribe(Disposable disposable) {
+            addDisposable(disposable);
+            if (isViewAttached()) {
+                getView().start();
+            }
+        }
+
+        @Override
+        public void onNext(T response) {
+            if (response.isSuccessful()) {
+                onSuccess(response);
+            } else {
+                error(response);
+            }
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            error(throwable);
+        }
+
+        @Override
+        public void onComplete() {
+            complete();
+        }
+
+        public abstract void onSuccess(T t);
+    }
+
+    public abstract class ResponseConsumer<T extends Response> implements Consumer<T> {
+
+        @Override
+        public void accept(T response) {
+            if (response.isSuccessful()) {
+                onSuccess(response);
+            } else {
+                error(response);
+            }
+        }
+
+        public abstract void onSuccess(T t);
     }
 }

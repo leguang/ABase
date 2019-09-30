@@ -26,6 +26,16 @@ public interface BaseContract {
         void start(Object... request);
 
         /**
+         * View可见时会调用该方法。
+         */
+        void visible(Object... request);
+
+        /**
+         * View不可见时会调用该方法。
+         */
+        void invisible(Object... request);
+
+        /**
          * Presenter的生命周期结束，释放资源。
          */
         @UiThread
