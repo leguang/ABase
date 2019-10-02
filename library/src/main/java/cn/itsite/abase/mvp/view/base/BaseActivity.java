@@ -12,7 +12,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.gyf.barlibrary.OSUtils;
 
 import cn.itsite.abase.common.ActivityHelper;
-import cn.itsite.abase.common.ascreen.AScreen;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.adialog.dialog.BaseDialog;
 import cn.itsite.adialog.dialog.LoadingDialog;
@@ -33,7 +32,6 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AScreen.setDefault(this);//设置屏幕适配
         initActivity();
         initStateBar();
         mPresenter = createPresenter();
