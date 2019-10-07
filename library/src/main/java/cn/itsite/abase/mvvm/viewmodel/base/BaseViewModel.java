@@ -1,7 +1,6 @@
 package cn.itsite.abase.mvvm.viewmodel.base;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -102,7 +101,6 @@ public class BaseViewModel<M extends BaseContract.Model> extends AndroidViewMode
 
         @Override
         public void onComplete() {
-            Log.e(TAG, "onComplete: ");
             complete();
         }
 

@@ -2,7 +2,6 @@ package cn.itsite.abase.mvvm.view.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.CallSuper;
@@ -45,7 +44,6 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFr
         mViewModel = onCreateViewModel();
         if (mViewModel != null) {
             getLifecycle().addObserver(mViewModel);
-            Log.e(TAG, "initViewModel: ");
             mViewModel.loading.observe(this, o -> {
                 onLoading();
             });
@@ -136,11 +134,7 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFr
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        Log.e(TAG, "onLazyInitView: ");
-
         if (mViewModel != null) {
-            Log.e(TAG, "onLazyInitView:进来了 ");
-
             mViewModel.onInitialize();
         }
     }

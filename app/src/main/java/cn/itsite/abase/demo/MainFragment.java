@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import cn.itsite.abase.mvvm.view.base.BaseFragment;
 
 public class MainFragment extends BaseFragment<MainViewModel> {
     private static final String TAG = "MainFragment";
+    private TextView tv;
 
     public static MainFragment newInstance() {
         return new MainFragment();
