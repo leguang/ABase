@@ -6,13 +6,14 @@ import androidx.annotation.NonNull;
 
 import cn.itsite.abase.Controller;
 import cn.itsite.abase.mvvm.contract.base.BaseContract;
+import cn.itsite.abase.mvvm.viewmodel.base.BaseViewModel;
 
 /**
  * Created by leguang on 2017/6/22 0022.
  * Email：langmanleguang@qq.com
  */
 
-public abstract class BaseController<VM extends BaseContract.ViewModel> extends Controller implements BaseContract.View {
+public abstract class BaseController<VM extends BaseViewModel> extends Controller implements BaseContract.View {
     public final String TAG = this.getClass().getSimpleName();
     protected VM mViewModel;
 
