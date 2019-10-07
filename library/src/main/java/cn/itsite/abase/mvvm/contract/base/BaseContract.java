@@ -1,4 +1,6 @@
-package cn.itsite.abase.mvp.contract.base;
+package cn.itsite.abase.mvvm.contract.base;
+
+import androidx.lifecycle.DefaultLifecycleObserver;
 
 /**
  * Author：leguang on 2016/10/10 0010 20:44
@@ -8,6 +10,7 @@ package cn.itsite.abase.mvp.contract.base;
  */
 public interface BaseContract {
     interface View {
+
         /**
          * 用于加载loading操作
          *
@@ -18,7 +21,7 @@ public interface BaseContract {
         }
 
         /**
-         * P层如果请求发生错误会调用该方法
+         * VM层如果请求发生错误会发信号过来，默认调用该方法
          *
          * @param error
          */
@@ -27,7 +30,7 @@ public interface BaseContract {
         }
 
         /**
-         * P层请求完成后会调用该方法
+         * VM层请求完成后会会发信号过来，默认调用该方法
          *
          * @param response
          */
@@ -36,10 +39,10 @@ public interface BaseContract {
         }
     }
 
-    interface Presenter {
+    interface ViewModel extends DefaultLifecycleObserver {
 
         /**
-         * Presenter的生命周期开始。
+         * 用于被View调用，初始化ViewModel请求等。
          */
         default void onInitialize(Object... request) {
 
@@ -56,13 +59,6 @@ public interface BaseContract {
          * View不可见时会调用该方法。
          */
         default void onInvisible(Object... request) {
-
-        }
-
-        /**
-         * Presenter的生命周期结束，释放资源。
-         */
-        default void onClear() {
 
         }
     }

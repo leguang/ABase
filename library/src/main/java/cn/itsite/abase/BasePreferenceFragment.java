@@ -1,4 +1,4 @@
-package cn.itsite.abase.mvp.view.base;
+package cn.itsite.abase;
 
 import android.app.Activity;
 import android.os.Bundle;

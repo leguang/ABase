@@ -1,16 +1,19 @@
-package cn.itsite.abase.mvp.view.base;
+package cn.itsite.abase.mvvm.view.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.gyf.barlibrary.ImmersionBar;
 
-import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.mvvm.contract.base.BaseContract;
+import cn.itsite.abase.mvvm.viewmodel.base.BaseViewModel;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -26,20 +29,40 @@ import retrofit2.Response;
  * <p>
  * 所有Fragment的基类。将Fragment作为View层对象，专职处理View的试图渲染和事件。
  */
-public abstract class BaseFragment<P extends BaseContract.Presenter> extends SwipeBackFragment implements BaseContract.View {
+public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFragment implements BaseContract.View {
     public final String TAG = this.getClass().getSimpleName();
-    protected P mPresenter;
+    protected VM mViewModel;
     protected ImmersionBar mImmersionBar;
     protected Dialog loadingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = onCreatePresenter();
+        initViewModel();
     }
 
-    @NonNull
-    protected P onCreatePresenter() {
+    private void initViewModel() {
+        mViewModel = onCreateViewModel();
+        if (mViewModel != null) {
+            getLifecycle().addObserver(mViewModel);
+            Log.e(TAG, "initViewModel: ");
+            mViewModel.loading.observe(this, o -> {
+                onLoading();
+            });
+            mViewModel.complete.observe(this, o -> {
+                onComplete();
+            });
+            mViewModel.error.observe(this, o -> {
+                onError();
+            });
+        }
+    }
+
+    protected VM onCreateViewModel() {
+        return onBindViewModel() != null ? ViewModelProviders.of(this).get(onBindViewModel()) : null;
+    }
+
+    protected Class<VM> onBindViewModel() {
         return null;
     }
 
@@ -52,27 +75,18 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
         hideSoftInput();
     }
 
-    /**
-     * mPresenter在这里销毁是因为创建是在onCreate里创建的，最好对称。
-     * 如果是在onCreateView里创建的，那就在onDestroyView里销毁。
-     * 因为ViewPager缓存，当返回到曾经缓存的fragment时，presenter会为空，
-     * 因为在onDestroyView里被置空了，但又不走onCreate，所以考虑是否把置空操作移动到onDestroy。
-     */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.onClear();
-            mPresenter = null;
-        }
+        getLifecycle().removeObserver(mViewModel);
     }
 
-    public P getPresenter() {
-        return mPresenter;
+    public VM getViewModel() {
+        return mViewModel;
     }
 
-    public void setPresenter(@NonNull P presenter) {
-        this.mPresenter = presenter;
+    public void setViewModel(@NonNull VM viewModel) {
+        this.mViewModel = viewModel;
     }
 
     @Override
@@ -122,24 +136,28 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        if (mPresenter != null) {
-            mPresenter.onInitialize();
+        Log.e(TAG, "onLazyInitView: ");
+
+        if (mViewModel != null) {
+            Log.e(TAG, "onLazyInitView:进来了 ");
+
+            mViewModel.onInitialize();
         }
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        if (mPresenter != null) {
-            mPresenter.onVisible();
+        if (mViewModel != null) {
+            mViewModel.onVisible();
         }
     }
 
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
-        if (mPresenter != null) {
-            mPresenter.onInvisible();
+        if (mViewModel != null) {
+            mViewModel.onInvisible();
         }
     }
 
@@ -163,6 +181,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
         @Override
         public void onComplete() {
             BaseFragment.this.onComplete();
+            ;
         }
 
         public abstract void onSuccess(T response);
@@ -191,7 +210,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
 
         @Override
         public void onComplete() {
-            BaseFragment.this.onComplete();
+            BaseFragment.this.onComplete("");
         }
 
         public abstract void onSuccess(T t);
@@ -204,7 +223,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
             if (response.isSuccessful()) {
                 onSuccess(response);
             } else {
-                onError(response);
+                BaseFragment.this.onError(response);
             }
         }
 

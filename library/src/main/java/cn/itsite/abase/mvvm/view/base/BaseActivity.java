@@ -1,4 +1,4 @@
-package cn.itsite.abase.mvp.view.base;
+package cn.itsite.abase.mvvm.view.base;
 
 import android.app.Dialog;
 import android.database.ContentObserver;
@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 
-import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.gyf.barlibrary.OSUtils;
 
 import cn.itsite.abase.common.ActivityHelper;
-import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.mvvm.contract.base.BaseContract;
+import cn.itsite.abase.mvvm.viewmodel.base.BaseViewModel;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
@@ -21,24 +22,19 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  * Author：leguang on 2016/10/9 0009 15:49
  * Email：langmanleguang@qq.com
  */
-public abstract class BaseActivity<P extends BaseContract.Presenter> extends SwipeBackActivity implements BaseContract.View {
+public abstract class BaseActivity<VM extends BaseViewModel> extends SwipeBackActivity implements BaseContract.View {
     public static final String TAG = BaseActivity.class.getSimpleName();
-    private static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
-    protected P mPresenter;
+    public static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
+    protected VM mViewModel;
     protected ImmersionBar mImmersionBar;
     protected Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initActivity();
-        initStateBar();
-        mPresenter = onCreatePresenter();
-    }
-
-    private void initActivity() {
-        //把每一个Activity加入栈中
         ActivityHelper.getInstance().addActivity(this);
+        initStateBar();
+        initViewModel();
     }
 
     protected void initStateBar() {
@@ -72,30 +68,30 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
         }
     }
 
-    @NonNull
-    protected P onCreatePresenter() {
+    private void initViewModel() {
+        mViewModel = onCreateViewModel();
+        if (mViewModel != null) {
+            getLifecycle().addObserver(mViewModel);
+            mViewModel.loading.observe(this, o -> {
+                onLoading();
+            });
+            mViewModel.complete.observe(this, o -> {
+                onComplete();
+            });
+            mViewModel.error.observe(this, o -> {
+                onError();
+            });
+        }
+    }
+
+    protected VM onCreateViewModel() {
+        return onBindViewModel() != null ? ViewModelProviders.of(this).get(onBindViewModel()) : null;
+    }
+
+    protected Class<VM> onBindViewModel() {
         return null;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.onClear();
-            mPresenter = null;
-        }
-        //把每一个Activity弹出栈。
-        ActivityHelper.getInstance().removeActivity(this);
-        if (mImmersionBar != null) {
-            mImmersionBar.destroy();
-        }
-    }
-
-    /**
-     * 用于被P层调用的通用函数。
-     *
-     * @param response
-     */
     @Override
     public void onLoading(Object... response) {
         showLoading();
@@ -123,5 +119,15 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     @Override
     public void onComplete(Object... response) {
         dismissLoading();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityHelper.getInstance().removeActivity(this);
+        if (mImmersionBar != null) {
+            mImmersionBar.destroy();
+        }
+        getLifecycle().removeObserver(mViewModel);
     }
 }

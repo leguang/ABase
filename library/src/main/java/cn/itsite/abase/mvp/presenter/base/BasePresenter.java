@@ -1,6 +1,5 @@
 package cn.itsite.abase.mvp.presenter.base;
 
-import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
@@ -25,14 +24,14 @@ import retrofit2.Response;
  */
 public class BasePresenter<V extends BaseContract.View, M extends BaseContract.Model> implements BaseContract.Presenter {
     public final String TAG = BasePresenter.class.getSimpleName();
-    private final Class<? extends BaseContract.View> mViewClass;
-    public Reference<V> mViewReference;
-    public M mModel;
+    protected final Class<? extends BaseContract.View> mViewClass;
+    protected Reference<V> mViewReference;
+    protected M mModel;
     /**
      * 每一套mvp应该拥有一个独立的RxManager
      * 管理Observables 和 Subscribers订阅
      */
-    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     /**
      * 创建Presenter的时候就绑定View和创建model。
@@ -54,37 +53,8 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
         this.mModel = model;
     }
 
-    /**
-     * 默认实现的接口，用于P层调用。
-     *
-     * @param request 传一些参数给P层。
-     */
-    @Override
-    @CallSuper
-    public void start(Object... request) {
-        if (isViewAttached()) {
-            getView().start();
-        }
-    }
-
-    /**
-     * 主要用于实现一些view可见时恢复订阅等一些场景。
-     *
-     * @param request
-     */
-    @Override
-    public void visible(Object... request) {
-
-    }
-
-    /**
-     * 主要用于view不可见时暂停某些数据处理等场景。
-     *
-     * @param request
-     */
-    @Override
-    public void invisible(Object... request) {
-
+    public M getModel() {
+        return mModel;
     }
 
     @UiThread
@@ -132,12 +102,10 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
     }
 
     @Override
-    @UiThread
-    @CallSuper
-    public void clear() {
+    public void onClear() {
         //优先释放Model层对象，避免内存泄露
         if (mModel != null) {
-            mModel.clear();
+            mModel.onClear();
             mModel = null;
         }
         //释放View层对象，避免内存泄露
@@ -151,17 +119,21 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
         }
     }
 
-    @CallSuper
-    public void complete() {
+    protected void loading() {
         if (isViewAttached()) {
-            getView().complete();
+            getView().onLoading();
         }
     }
 
-    @CallSuper
-    public void error(Object request) {
+    protected void complete() {
         if (isViewAttached()) {
-            getView().error(request);
+            getView().onComplete();
+        }
+    }
+
+    protected void error(Object request) {
+        if (isViewAttached()) {
+            getView().onComplete(request);
         }
     }
 
@@ -182,9 +154,7 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
         @Override
         public void onSubscribe(Disposable disposable) {
             addDisposable(disposable);
-            if (isViewAttached()) {
-                getView().start();
-            }
+            loading();
         }
 
         @Override
@@ -210,9 +180,7 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
         @Override
         public void onSubscribe(Disposable disposable) {
             addDisposable(disposable);
-            if (isViewAttached()) {
-                getView().start();
-            }
+            loading();
         }
 
         @Override

@@ -1,33 +1,45 @@
 package cn.itsite.abase.mvp.view.base;
 
 import android.content.Context;
-import android.view.View;
+
+import androidx.annotation.NonNull;
+
+import cn.itsite.abase.Controller;
+import cn.itsite.abase.mvp.contract.base.BaseContract;
 
 /**
  * Created by leguang on 2017/6/22 0022.
  * Email：langmanleguang@qq.com
  */
 
-public abstract class BaseController {
-    public View mRootView;
-    protected Context mContext;
+public abstract class BaseController<P extends BaseContract.Presenter> extends Controller implements BaseContract.View {
+    public final String TAG = this.getClass().getSimpleName();
+    protected P mPresenter;
 
     public BaseController(Context context) {
-        this.mContext = context;
-        this.mRootView = initView();
-        initData();
+        super(context);
+        mPresenter = createPresenter();
     }
 
-    /**
-     * 初始化View
-     *
-     * @return
-     */
-    protected abstract View initView();
+    @NonNull
+    protected P createPresenter() {
+        return null;
+    }
 
-    /**
-     * 初始化数据的方法，孩子如果有数据初始化，就复写
-     */
-    public void initData() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onClear();
+            mPresenter = null;
+        }
+    }
+
+    public P getPresenter() {
+        return mPresenter;
+    }
+
+    public void setPresenter(@NonNull P presenter) {
+        this.mPresenter = presenter;
     }
 }

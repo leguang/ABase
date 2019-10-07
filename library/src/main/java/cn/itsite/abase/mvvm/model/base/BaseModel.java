@@ -1,6 +1,6 @@
-package cn.itsite.abase.mvp.model.base;
+package cn.itsite.abase.mvvm.model.base;
 
-import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.mvvm.contract.base.BaseContract;
 
 /**
  * Author：leguang on 2016/10/9 0009 10:35
@@ -10,4 +10,5 @@ import cn.itsite.abase.mvp.contract.base.BaseContract;
  */
 public abstract class BaseModel implements BaseContract.Model {
     public final String TAG = BaseModel.class.getSimpleName();
+
 }
