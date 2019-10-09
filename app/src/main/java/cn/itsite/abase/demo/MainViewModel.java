@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MainViewModel extends BaseViewModel<MainRepository> {
     public MainViewModel(@NonNull Application application) {
         super(application);
+        Log.e(TAG, "MainViewModel: " );
     }
 
     @Override

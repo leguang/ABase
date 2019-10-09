@@ -21,11 +21,11 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         return new MainFragment();
     }
 
-    @NonNull
-    @Override
-    protected MainViewModel onCreateViewModel() {
-        return ViewModelProviders.of(this).get(MainViewModel.class);
-    }
+//    @NonNull
+//    @Override
+//    protected MainViewModel onCreateViewModel() {
+//        return ViewModelProviders.of(this).get(MainViewModel.class);
+//    }
 
 //    @Override
 //    protected Class<MainViewModel> onBindViewModel() {

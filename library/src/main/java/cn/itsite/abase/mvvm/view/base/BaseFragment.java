@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.gyf.barlibrary.ImmersionBar;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import cn.itsite.abase.mvvm.contract.base.BaseContract;
 import cn.itsite.abase.mvvm.viewmodel.base.BaseViewModel;
 import cn.itsite.adialog.dialog.LoadingDialog;
@@ -42,6 +45,9 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFr
 
     private void initViewModel() {
         mViewModel = onCreateViewModel();
+        if (mViewModel == null) {
+            createViewModel();
+        }
         if (mViewModel != null) {
             getLifecycle().addObserver(mViewModel);
             mViewModel.loading.observe(this, o -> {
@@ -54,6 +60,22 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFr
                 onError();
             });
         }
+    }
+
+    /**
+     * 借助泛型来自动生成对应的ViewModel对象
+     *
+     * @return
+     */
+    private VM createViewModel() {
+        Type type = getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+            Class<VM> vmClass = (Class<VM>) types[0];
+            mViewModel = ViewModelProviders.of(this).get(vmClass);
+        }
+
+        return mViewModel;
     }
 
     protected VM onCreateViewModel() {
