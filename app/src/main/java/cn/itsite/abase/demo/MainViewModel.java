@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainViewModel extends BaseViewModel<MainModel> {
+public class MainViewModel extends BaseViewModel<MainRepository> {
     public MainViewModel(@NonNull Application application) {
         super(application);
     }
@@ -25,7 +25,7 @@ public class MainViewModel extends BaseViewModel<MainModel> {
                 .subscribe(new BaseObserver<Object>() {
                     @Override
                     public void onSuccess(Object response) {
-                        Log.e(TAG, "開始: " + response);
+                        Log.e(TAG, "开始: " + response);
                     }
                 });
     }

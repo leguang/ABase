@@ -8,7 +8,6 @@ import cn.itsite.abase.mvvm.contract.base.BaseContract;
  * <p>
  * 所有Model类的基类，负责模型层的内容，包括数据获取和处理以及部分业务逻辑代码。
  */
-public abstract class BaseModel implements BaseContract.Model {
-    public final String TAG = BaseModel.class.getSimpleName();
-
+public abstract class BaseRepository implements BaseContract.Model {
+    public final String TAG = BaseRepository.class.getSimpleName();
 }

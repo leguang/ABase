@@ -1,6 +1,6 @@
 package cn.itsite.abase.demo;
 
-import cn.itsite.abase.mvvm.model.base.BaseModel;
+import cn.itsite.abase.mvvm.model.base.BaseRepository;
 
 /**
  * @author: leguang
@@ -10,5 +10,5 @@ import cn.itsite.abase.mvvm.model.base.BaseModel;
  * @time: 2019/10/7/0007 15:02
  * @description:
  */
-public class MainModel extends BaseModel {
+public class MainRepository extends BaseRepository {
 }

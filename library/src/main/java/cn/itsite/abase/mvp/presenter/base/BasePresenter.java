@@ -41,11 +41,11 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
     public BasePresenter(V mView) {
         mViewClass = mView.getClass();
         setView(mView);
-        mModel = createModel();
+        mModel = onCreateModel();
     }
 
     @NonNull
-    protected M createModel() {
+    protected M onCreateModel() {
         return null;
     }
 

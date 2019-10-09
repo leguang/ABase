@@ -32,10 +32,11 @@ public class BaseViewModel<M extends BaseContract.Model> extends AndroidViewMode
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+        mModel = onCreateModel();
     }
 
     @NonNull
-    protected M createModel() {
+    protected M onCreateModel() {
         return null;
     }
 
