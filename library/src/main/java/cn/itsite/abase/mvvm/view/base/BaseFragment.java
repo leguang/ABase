@@ -51,13 +51,13 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFr
         if (mViewModel != null) {
             getLifecycle().addObserver(mViewModel);
             mViewModel.loading.observe(this, o -> {
-                onLoading();
+                onLoading(o);
             });
             mViewModel.complete.observe(this, o -> {
-                onComplete();
+                onComplete(o);
             });
             mViewModel.error.observe(this, o -> {
-                onError();
+                onError(o);
             });
         }
     }

@@ -133,7 +133,7 @@ public class BasePresenter<V extends BaseContract.View, M extends BaseContract.M
 
     protected void error(Object request) {
         if (isViewAttached()) {
-            getView().onComplete(request);
+            getView().onError(request);
         }
     }
 
