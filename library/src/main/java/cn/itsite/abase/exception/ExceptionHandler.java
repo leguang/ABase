@@ -14,7 +14,7 @@ public class ExceptionHandler {
     public static void handle(Throwable t) {
         if (t != null) {
             t.printStackTrace();
-            Logger.e(t.getMessage());
+            Logger.e(t.getMessage() + "");
         }
     }
 }
