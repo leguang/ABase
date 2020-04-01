@@ -42,6 +42,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     }
 
     protected void initStateBar() {
+        mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.keyboardEnable(true)
                 .navigationBarWithKitkatEnable(false)
                 .init();
