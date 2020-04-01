@@ -61,13 +61,6 @@ public interface BaseContract {
         default void onInvisible(Object... request) {
 
         }
-
-        /**
-         * ViewModel的生命周期结束，释放资源。
-         */
-        default void onClear() {
-
-        }
     }
 
     interface Model {
