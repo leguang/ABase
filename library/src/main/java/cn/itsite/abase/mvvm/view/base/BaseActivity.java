@@ -38,8 +38,6 @@ public abstract class BaseActivity<VM extends BaseViewModel> extends SwipeBackAc
     }
 
     protected void initStateBar() {
-        mImmersionBar = ImmersionBar.with(this)
-                .statusBarDarkFont(true, 0.2F);
         mImmersionBar.keyboardEnable(true)
                 .navigationBarWithKitkatEnable(false)
                 .init();

@@ -42,8 +42,6 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
     }
 
     protected void initStateBar() {
-        mImmersionBar = ImmersionBar.with(this)
-                .statusBarDarkFont(true, 0.2F);
         mImmersionBar.keyboardEnable(true)
                 .navigationBarWithKitkatEnable(false)
                 .init();

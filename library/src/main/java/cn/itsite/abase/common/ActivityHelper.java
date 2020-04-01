@@ -5,9 +5,12 @@ import android.app.Activity;
 import java.util.Stack;
 
 /**
- * activity堆栈式管理
- * Author：leguang on 2016/10/9 0009 15:49
- * Email：langmanleguang@qq.com
+ * @version v0.0.0
+ * @Author leguang
+ * @E-mail langmanleguang@qq.com
+ * @Blog https://github.com/leguang
+ * @Time 2016/4/1/0001 17:21
+ * Description: activity堆栈式管理
  */
 public class ActivityHelper {
     public final String TAG = ActivityHelper.class.getSimpleName();

@@ -6,12 +6,13 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 /**
- * Author：leguang on 2017/4/15 0009 15:00
- * Email：langmanleguang@qq.com
- * <p>
- * 此类作用仅为隔离BaseRecyclerViewAdapterHelper这个框架
+ * @version v0.0.0
+ * @Author leguang
+ * @E-mail langmanleguang@qq.com
+ * @Blog https://github.com/leguang
+ * @Time 2016/4/1/0001 17:21
+ * Description: 此类作用仅为隔离BaseRecyclerViewAdapterHelper这个框架
  */
-
 public abstract class BaseRecyclerViewAdapter<T, K extends BaseViewHolder> extends BaseQuickAdapter<T, K> {
 
     /**

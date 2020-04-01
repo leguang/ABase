@@ -4,10 +4,13 @@ import android.content.Context;
 
 import androidx.multidex.MultiDexApplication;
 
-
 /**
- * Author：leguang on 2016/10/9 0009 15:49
- * Email：langmanleguang@qq.com
+ * @version v0.0.0
+ * @Author leguang
+ * @E-mail langmanleguang@qq.com
+ * @Blog https://github.com/leguang
+ * @Time 2016/4/1/0001 17:21
+ * Description:
  */
 public class BaseApplication extends MultiDexApplication {
     public static final String TAG = BaseApplication.class.getSimpleName();

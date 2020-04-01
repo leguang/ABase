@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by leguang on 2017/6/22 0022.
- * Email：langmanleguang@qq.com
+ * @version v0.0.0
+ * @Author leguang
+ * @E-mail langmanleguang@qq.com
+ * @Blog https://github.com/leguang
+ * @Time 2016/4/1/0001 17:21
+ * Description:
  */
-
 public abstract class Controller {
     protected View mView;
     protected Context mContext;

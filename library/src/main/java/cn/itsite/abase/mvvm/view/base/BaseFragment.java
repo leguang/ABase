@@ -197,7 +197,6 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends SwipeBackFr
         @Override
         public void onComplete() {
             BaseFragment.this.onComplete();
-            ;
         }
 
         public abstract void onSuccess(T response);

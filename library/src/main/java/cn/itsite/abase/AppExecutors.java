@@ -25,10 +25,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * Global executor pools for the whole application.
- * <p>
- * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
- * webservice requests).
+ * @version v0.0.0
+ * @Author leguang
+ * @E-mail langmanleguang@qq.com
+ * @Blog https://github.com/leguang
+ * @Time 2017/4/1/0001 17:21
+ * Description:
  */
 public class AppExecutors {
 
