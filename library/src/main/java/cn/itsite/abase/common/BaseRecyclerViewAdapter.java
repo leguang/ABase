@@ -1,7 +1,7 @@
 package cn.itsite.abase.common;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
 import java.util.List;
 
@@ -24,10 +24,6 @@ public abstract class BaseRecyclerViewAdapter<T, K extends BaseViewHolder> exten
      */
     public BaseRecyclerViewAdapter(int layoutResId, List<T> data) {
         super(layoutResId, data);
-    }
-
-    public BaseRecyclerViewAdapter(List<T> data) {
-        super(data);
     }
 
     public BaseRecyclerViewAdapter(int layoutResId) {
